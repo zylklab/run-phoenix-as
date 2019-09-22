@@ -1,4 +1,4 @@
-##Ejemplo de accceso a hbase usando Phoenix con identificación de usuario
+## Ejemplo de accceso a hbase usando Phoenix con identificación de usuario
 
 El problema que se está intentando resolver es trasldadar la indentidad a la capa de phoenix en un cluster que no tienen activado Kerberos.
 
