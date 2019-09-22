@@ -28,29 +28,65 @@
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>HDP30</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.apache.hbase</groupId>
+					<artifactId>hbase-client</artifactId>
+					<version>2.1.0</version>
+				</dependency>
+				<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-common -->
+				<dependency>
+					<groupId>org.apache.hbase</groupId>
+					<artifactId>hbase-common</artifactId>
+					<version>2.1.0</version>
+				</dependency>
+				<!-- https://mvnrepository.com/artifact/org.apache.phoenix/phoenix-core -->
+				<dependency>
+					<groupId>org.apache.phoenix</groupId>
+					<artifactId>phoenix-core</artifactId>
+					<version>5.0.0-HBase-2.0</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>HDP24</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.apache.hbase</groupId>
+					<artifactId>hbase-client</artifactId>
+					<version>1.1.2</version>
+				</dependency>
+				<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-common -->
+				<dependency>
+					<groupId>org.apache.hbase</groupId>
+					<artifactId>hbase-common</artifactId>
+					<version>1.1.2</version>
+				</dependency>
+				<!-- https://mvnrepository.com/artifact/org.apache.phoenix/phoenix-core -->
+				<dependency>
+					<groupId>org.apache.phoenix</groupId>
+					<artifactId>phoenix-core</artifactId>
+					<version>4.4.0-HBase-1.1</version>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>3.8.1</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.hbase</groupId>
-			<artifactId>hbase-client</artifactId>
-			<version>2.1.0</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-common -->
-		<dependency>
-			<groupId>org.apache.hbase</groupId>
-			<artifactId>hbase-common</artifactId>
-			<version>2.1.0</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.phoenix/phoenix-core -->
-		<dependency>
-			<groupId>org.apache.phoenix</groupId>
-			<artifactId>phoenix-core</artifactId>
-			<version>5.0.0-HBase-2.0</version>
 		</dependency>
 	</dependencies>
 </project>

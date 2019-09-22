@@ -9,18 +9,30 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+
 import org.apache.hadoop.security.UserGroupInformation;
 
 
 public class App {
 	
+	
 	public static void main(String[] args) throws IOException, InterruptedException, SQLException {
+		App.main0(args);
+		App.main1(args);
+		//App.main2(args);
+	}
+	
+	
+	
+	public static void main0(String[] args) throws IOException, InterruptedException, SQLException {
 		final String ZK_PORT = "2181";
 		final String ZK_HOST = "odin003.bigdata.zylk.net";
 		final String ZK_PATH = "/hbase-unsecure";
 		//jdbc:phoenix:m1.hdp.local,m2.hdp.local,d1.hdp.local:2181:/hbase-unsecure
 		final String url = "jdbc:phoenix:" + ZK_HOST +":"+ ZK_PORT+":"+ZK_PATH;
-		UserGroupInformation user2Ugi = UserGroupInformation.createRemoteUser("hbase", null);
+		//UserGroupInformation user2Ugi = UserGroupInformation.createRemoteUser("hbase", null);
+		UserGroupInformation user2Ugi = UserGroupInformation.createRemoteUser("zylk", null);
 		final List<String> result = new ArrayList<>();
 		long t0 = System.currentTimeMillis();
 		user2Ugi.doAs(new PrivilegedExceptionAction<Void>() {
@@ -43,6 +55,34 @@ public class App {
 		}
 		System.out.println("tiempo "+(System.currentTimeMillis() - t0));
 	}
+	
+	
+	public static void main1(String[] args) throws IOException, InterruptedException, SQLException {
+		final String ZK_PORT = "2181";
+		final String ZK_HOST = "odin003.bigdata.zylk.net";
+		final String ZK_PATH = "/hbase-unsecure";
+		//jdbc:phoenix:m1.hdp.local,m2.hdp.local,d1.hdp.local:2181:/hbase-unsecure
+		final String url = "jdbc:phoenix:" + ZK_HOST +":"+ ZK_PORT+":"+ZK_PATH;
+		UserGroupInformation user2Ugi = UserGroupInformation.createRemoteUser("hbase", null);
+		UserGroupInformation.setLoginUser(user2Ugi);
+		final List<String> result = new ArrayList<>();
+		long t0 = System.currentTimeMillis();
+		try (Connection conn = DriverManager.getConnection(url); Statement stmt = conn.createStatement()) {
+			conn.setAutoCommit(true);
+			try (ResultSet rs = stmt.executeQuery("select STATE,CITY,POPULATION from US_POPULATION")) {
+				while (rs.next()) {
+					result.add(rs.getString("STATE"));
+				}
+			} 
+		} 
+		
+		for (String string : result) {
+			System.out.println("resultado mapeado "+string);
+		}
+		System.out.println("tiempo "+(System.currentTimeMillis() - t0));
+	}
+	
+	
 	/*
 	 * Prueba con queryserer que no termina de funcionar ... pero que creo que también debería funcionar con el doAs
 	 */
